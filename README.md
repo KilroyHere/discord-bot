@@ -17,9 +17,9 @@ Botman is in a continuous state of development. Lots of New features/updates are
   
   * Voice Channel support for Music Streams.
   * Text Commands:
-    >For Server related info
-    >For Role Management
-    >For Moderation
+    *For retrieving Server related information
+    *For Role Management
+    *For Moderation
 
 
 
