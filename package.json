@@ -1,0 +1,15 @@
+{
+  "name": "discord-bot",
+  "version": "1.0.0",
+  "description": "Bots for life XD",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Aryan Patel",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "dotenv": "^9.0.2"
+  }
+}
