@@ -1,6 +1,5 @@
 console.log('Hello World!   ^_^');
 
-
 const Discord = require('discord.js');
 const command = require('./command');
 const client = new Discord.Client();
@@ -25,49 +24,49 @@ function readyDiscord(){
 }
 
 
-    /*Random Quote Command `!quote`*/
-    command(client,'!quote', message =>{
-        let url = "https://api.quotable.io/random"; //Courtesy:https://github.com/lukePeavey/quotable
+/*Random Quote Command `!quote`*/
+command(client,'!quote', message =>{
+    let url = "https://api.quotable.io/random"; //Courtesy:https://github.com/lukePeavey/quotable
+    let settings = { method: "Get" };
+    fetch(url, settings)
+    .then(res => res.json())
+    .then((json) => {
+    let quote = json.content;
+    let author = json.author;
+    message.reply(quote+' - '+author);
+    });
+});
+
+
+
+var passwordManager1;
+var passwordManager2;
+var passwordCounter = 2;
+/*Password Maker Command `!password`*/
+command(client,'!password', message => {
+    if(passwordCounter === 0)
+    {
+        passwordCounter = 2;
+    }
+    if (passwordCounter === 2 )
+    {
+        passwordManager1 = message.author;
+        passwordCounter -= 1;
+
+    }
+    else if (passwordCounter === 1)
+    {
+        passwordManager2 = message.author;
+        passwordCounter -= 1;
+        let url = "https://random-word-form.herokuapp.com/random/noun"; 
         let settings = { method: "Get" };
         fetch(url, settings)
         .then(res => res.json())
         .then((json) => {
-        let quote = json.content;
-        let author = json.author;
-        message.reply(quote+' - '+author);
+        let word = json[0];
+        passwordManager1.send("Your Password: "+word)
+        passwordManager2.send("Your Password: "+word);
         });
-    });
-
-
-    
-    var passwordManager1;
-    var passwordManager2;
-    var passwordCounter = 2;
-    /*Password Maker Command `!password`*/
-    command(client,'!password', message => {
-        if(passwordCounter === 0)
-        {
-            passwordCounter = 2;
-        }
-        if (passwordCounter === 2 )
-        {
-            passwordManager1 = message.author;
-            passwordCounter -= 1;
-
-        }
-        else if (passwordCounter === 1)
-        {
-            passwordManager2 = message.author;
-            passwordCounter -= 1;
-            let url = "https://random-word-form.herokuapp.com/random/noun"; 
-            let settings = { method: "Get" };
-            fetch(url, settings)
-            .then(res => res.json())
-            .then((json) => {
-            let word = json[0];
-            passwordManager1.send("Your Password: "+word)
-            passwordManager2.send("Your Password: "+word);
-            });
-        }
-    });
+    }
+});
 
