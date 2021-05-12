@@ -2,6 +2,7 @@ console.log('Hello World!   ^_^');
 
 
 const Discord = require('discord.js');
+const command = require('./command');
 const client = new Discord.Client();
 const config = require('dotenv').config();
 const fetch = require('node-fetch');
@@ -24,18 +25,8 @@ function readyDiscord(){
 }
 
 
-var passwordManager1;
-var passwordManager2;
-var passwordCounter = 2;
-client.on('message',gotMessage); 
-function gotMessage(msg){
-
-    if(msg.author.bot){
-        return;
-    }
-
     /*Random Quote Command `!quote`*/
-    if(msg.content.toLowerCase() === '!quote'){
+    command(client,'!quote', message =>{
         let url = "https://api.quotable.io/random"; //Courtesy:https://github.com/lukePeavey/quotable
         let settings = { method: "Get" };
         fetch(url, settings)
@@ -43,25 +34,30 @@ function gotMessage(msg){
         .then((json) => {
         let quote = json.content;
         let author = json.author;
-        msg.reply(quote+' - '+author);
+        message.reply(quote+' - '+author);
         });
-    }
+    });
 
+
+    
+    var passwordManager1;
+    var passwordManager2;
+    var passwordCounter = 2;
     /*Password Maker Command `!password`*/
-    if(msg.content.toLowerCase() === '!password' ){
+    command(client,'!password', message => {
         if(passwordCounter === 0)
         {
             passwordCounter = 2;
         }
         if (passwordCounter === 2 )
         {
-            passwordManager1 = msg.author;
+            passwordManager1 = message.author;
             passwordCounter -= 1;
 
         }
         else if (passwordCounter === 1)
         {
-            passwordManager2 = msg.author;
+            passwordManager2 = message.author;
             passwordCounter -= 1;
             let url = "https://random-word-form.herokuapp.com/random/noun"; 
             let settings = { method: "Get" };
@@ -73,8 +69,5 @@ function gotMessage(msg){
             passwordManager2.send("Your Password: "+word);
             });
         }
-    }
+    });
 
-
-
-}
